@@ -21,6 +21,7 @@ Write a one-page proposal briefly describing the following.
 A small paragraph describing the topic. 
 Your research questions. 
 Your methodology. 
+
 Part 2: Complete the project, submit your final product and present your project in class. Your final product may be one of the following.
 
 A mini research paper with no more than 2 pages (excluding the references) and a ppt presentation;
