@@ -46,3 +46,9 @@ derived_key = HKDF(
 assert server_shared_key == client_shared_key
 print("Shared key established successfully!")
 print(f"Derived symmetric key: {derived_key.hex()}")
+
+"""this symmetric key returns in hexa decimal
+if we wanted to make it a decimal in order to use our own code we can use:
+    i=int(<key>, 16)
+this way we could use our old symmetric algorythm
+"""
