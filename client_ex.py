@@ -3,9 +3,8 @@ from cryptography.hazmat.primitives.asymmetric import dh
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives import serialization
-
-from Decrypt import DECS
-from Encoding import Encoding
+from Decrypt import Decrypt  # Import the Decrypt class
+from Encoding import Encoding  # Import your Encoding function or class
 
 # Create a socket for the client
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,21 +43,17 @@ derived_key = HKDF(
     salt=None,
     info=b'handshake data',
 ).derive(client_shared_key)
-numeric_key = int.from_bytes(derived_key[:4], 'big')  # Derive numeric key
 print(f"Derived symmetric key: {derived_key.hex()}")
-print(f"Numeric key: {numeric_key}")
 
 try:
     while True:
-        # Send a message to the server
-        raw_message = input("Client: ")
-        if raw_message.lower() == "exit":
-            print("Client disconnected.")
-            client_socket.sendall(b"exit")
-            break
-
-        client_message = Encrypt(raw_message, numeric_key)
+        # Get input, encode it, and send it to the server
+        client_input = input("Client: ")
+        client_message = Encoding.Encrypt(client_input, int(derived_key.hex(),16))  # Assuming Encoding is a callable function
         client_socket.sendall(client_message.encode('utf-8'))
+        if client_input.lower() == "exit":
+            print("Client disconnected.")
+            break
 
         # Receive a message from the server
         server_message = client_socket.recv(1024).decode('utf-8')
@@ -66,6 +61,8 @@ try:
             print("Server disconnected.")
             break
 
-        print(f"Server: {Decrypt.DECS(server_message, numeric_key)}")
+        # Decrypt the server's message
+        decrypted_message = server_message+"\n"+Decrypt.DECS(server_message, int(derived_key.hex(),16))
+        print(f"Server: {decrypted_message}")
 finally:
     client_socket.close()
