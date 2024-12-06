@@ -1,7 +1,7 @@
 class Encoding:
     @staticmethod
     def Encrypt(s, key)->str:
-        encoded_bytes = [(ord(char) + i + key) % 128 for i, char in enumerate(s)]
+        encoded_bytes = [(ord(char) + i + key) % 255 for i, char in enumerate(s)]
         char_array = [chr(byte) for byte in encoded_bytes]
         enc_s = Encoding.ENCS_TRANS(char_array)
         return enc_s

@@ -6,15 +6,15 @@ from cryptography.hazmat.primitives import serialization
 from Decrypt import Decrypt  # Import the Decrypt class
 from Encoding import Encoding  # Import your Encoding function or class
 
-# Generate parameters for Diffie-Hellman
-parameters = dh.generate_parameters(generator=2, key_size=2048)
-
 # Create a socket for the server
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind(('127.0.0.1', 12345))
 server_socket.listen(1)
 
 print("Server is listening for connections...")
+
+# Generate parameters for Diffie-Hellman
+parameters = dh.generate_parameters(generator=2, key_size=2048)
 
 # Accept a connection from a client
 conn, addr = server_socket.accept()

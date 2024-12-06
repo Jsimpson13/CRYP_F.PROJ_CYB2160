@@ -5,7 +5,7 @@ class Decrypt:
         decrypted_string = Decrypt.DECS_TRANS(encrypted_string)
 
         #Subtract the key and index
-        decoded_bytes = [(ord(char) - i - key) % 128 for i, char in enumerate(decrypted_string)]
+        decoded_bytes = [(ord(char) - i - key) % 255 for i, char in enumerate(decrypted_string)]
 
         decrypted_string = ''.join(chr(byte) for byte in decoded_bytes)
 
